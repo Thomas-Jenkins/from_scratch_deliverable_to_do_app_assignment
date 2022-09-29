@@ -13,3 +13,7 @@ export async function authUser(email, password, type) {
   }
   return response.user;
 }
+
+export async function singOut() {
+  await client.auth.signOut();
+}

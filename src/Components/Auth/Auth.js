@@ -10,16 +10,17 @@ export default function Auth() {
 
   const { user, setUser } = useContext(UserContext);
 
+  
+
   const submitAuth = async () => {
-    
     const userResp = await authUser(email, password, type);
     setUser(userResp);
     setEmail('');
     setPassword('');
   };
-
+  
   if (user) {
-    return <Redirect to="/to-do" />;
+    return <Redirect to="/todo/todoinput" />;
   }
 
   return (
@@ -33,7 +34,7 @@ export default function Auth() {
       />
       <label>Password: </label>
       <input 
-        type="text" 
+        type="password" 
         value={password} 
         placeholder='Enter Password'
         onChange={(e) => setPassword(e.target.value)}
