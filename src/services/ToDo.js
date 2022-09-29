@@ -10,3 +10,9 @@ export async function createToDo(description) {
   console.log('resp:', response.data);
   return checkError(response);
 }
+
+export async function checkToDo({ id, complete }) {
+  const response = await client .from('todos').update({ complete: !complete }).match({ id }).single();
+
+  return checkError(response);
+}
