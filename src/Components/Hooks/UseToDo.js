@@ -12,6 +12,7 @@ export default function useToDo() {
         console.error(e.message);
       }
     };
+    fetchItems();
   }, []);
   return { items, setItems };
 }

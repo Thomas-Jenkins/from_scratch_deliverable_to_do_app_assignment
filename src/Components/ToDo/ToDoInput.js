@@ -16,6 +16,8 @@ export default function ToDoInput() {
     return <Redirect to="/auth/auth" />;
   }
 
+  const handleCheck = async
+
   const handleNewItem = async () => {
     try {
       await createToDo(description);
@@ -28,10 +30,19 @@ export default function ToDoInput() {
   };
 
   return (
-    <div className="to-do-input">
-        
-      <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
-      <button onClick={handleNewItem}>Add to List</button>
-    </div>
+    <>
+      <div className="to-do-input">
+        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <button onClick={handleNewItem}>Add to List</button>
+      </div>
+      <div className="todo-display">
+        {items.map((item) => (
+          <div key={item.id}>
+            {item.description}
+            <input type="checkbox"></input>
+          </div>
+        ))}
+      </div>
+    </>  
   );
 }
