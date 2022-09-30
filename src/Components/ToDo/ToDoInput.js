@@ -11,7 +11,6 @@ export default function ToDoInput() {
     
   const { items, setItems } = useToDo();
     
-  console.log(items);
   const { user } = useContext(UserContext);
   if (!user) {
     return <Redirect to="/auth/auth" />;
@@ -33,6 +32,7 @@ export default function ToDoInput() {
       setItems((prevItems) => prevItems.map((prevItem) => (prevItem.id === item.id ? updatedItem : prevItem))
       );
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message);
     }
   };

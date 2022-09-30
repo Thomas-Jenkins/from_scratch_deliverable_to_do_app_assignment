@@ -9,6 +9,7 @@ export default function useToDo() {
         const data = await getToDo();
         setItems(data);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message);
       }
     };
