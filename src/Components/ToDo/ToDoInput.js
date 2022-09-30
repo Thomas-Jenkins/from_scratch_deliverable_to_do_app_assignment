@@ -1,20 +1,31 @@
 import { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { UserContext } from '../../Context/UserContext';
-import { createToDo, checkToDo } from '../../services/ToDo';
+import { createToDo, checkToDo, deleteCompletedToDo, getToDo } from '../../services/ToDo';
 import useToDo from '../Hooks/UseToDo';
 
 
 
 export default function ToDoInput() {
   const [description, setDescription] = useState('');
-
+    
   const { items, setItems } = useToDo();
-
+    
+  console.log(items);
   const { user } = useContext(UserContext);
   if (!user) {
     return <Redirect to="/auth/auth" />;
   }
+
+  const handleDelete = async () => {
+    try {
+      await deleteCompletedToDo(); 
+      setItems(await getToDo());
+    } catch (e) {
+        // eslint-disable-next-line no-console
+      console.error(e.message);
+    }
+  };
 
   const handleCheck = async (item) => {
     try {
@@ -29,7 +40,9 @@ export default function ToDoInput() {
   const handleNewItem = async () => {
     try {
       await createToDo(description);
-      setItems((prev) => [...prev, { description }]);
+    //   console.log(temp);
+      setItems(await getToDo());
+    //   setItems((prev) => [...prev, { description }]);
       setDescription('');
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -51,6 +64,9 @@ export default function ToDoInput() {
               onChange={() => handleCheck(item)} />
           </div>
         ))}
+      </div>
+      <div>
+        <button onClick={handleDelete}>Delete Completed To Dos</button>
       </div>
     </>  
   );

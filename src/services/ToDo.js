@@ -7,12 +7,16 @@ export async function getToDo() {
 
 export async function createToDo(description) {
   const response = await client.from('todos').insert({ description });
-  console.log('resp:', response.data);
   return checkError(response);
 }
 
 export async function checkToDo({ id, complete }) {
   const response = await client .from('todos').update({ complete: !complete }).match({ id }).single();
 
+  return checkError(response);
+}
+
+export async function deleteCompletedToDo() {
+  const response = await client .from('todos').delete().match({ complete: true });
   return checkError(response);
 }
